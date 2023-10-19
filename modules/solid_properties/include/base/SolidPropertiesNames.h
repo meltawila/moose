@@ -14,6 +14,7 @@
 namespace SolidPropertiesNames
 {
 static const std::string thermal_conductivity = "thermal_conductivity";
+static const std::string thermal_conductivity_dT = "thermal_conductivity_dT";
 static const std::string density = "density";
 static const std::string specific_heat = "specific_heat";
 }

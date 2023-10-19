@@ -35,6 +35,7 @@ protected:
   using ThermalSolidPropertiesMaterialTempl<is_ad>::_temperature;
   using ThermalSolidPropertiesMaterialTempl<is_ad>::_cp;
   using ThermalSolidPropertiesMaterialTempl<is_ad>::_k;
+  using ThermalSolidPropertiesMaterialTempl<is_ad>::_dk_dT;
   using ThermalSolidPropertiesMaterialTempl<is_ad>::_rho;
   using ThermalSolidPropertiesMaterialTempl<is_ad>::_sp;
   using ThermalSolidPropertiesMaterialTempl<is_ad>::_qp;

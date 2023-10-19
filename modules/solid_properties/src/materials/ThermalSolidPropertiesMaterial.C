@@ -10,6 +10,7 @@
 #include "ThermalSolidPropertiesMaterial.h"
 #include "ThermalSolidProperties.h"
 #include "SolidPropertiesNames.h"
+#include "metaphysicl/raw_type.h"
 
 registerMooseObject("SolidPropertiesApp", ThermalSolidPropertiesMaterial);
 registerMooseObject("SolidPropertiesApp", ADThermalSolidPropertiesMaterial);
@@ -27,6 +28,9 @@ ThermalSolidPropertiesMaterialTempl<is_ad>::validParams()
   params.addParam<std::string>(SolidPropertiesNames::thermal_conductivity,
                                SolidPropertiesNames::thermal_conductivity,
                                "Name to be used for the thermal conductivity");
+  params.addParam<std::string>(SolidPropertiesNames::thermal_conductivity_dT,
+                               SolidPropertiesNames::thermal_conductivity_dT,
+                               "Name to be used for the thermal conductivity temperature derivative");
   params.addParam<std::string>(SolidPropertiesNames::density,
                                SolidPropertiesNames::density,
                                "Name to be used for the density");
@@ -44,6 +48,8 @@ ThermalSolidPropertiesMaterialTempl<is_ad>::ThermalSolidPropertiesMaterialTempl(
         getParam<std::string>(SolidPropertiesNames::specific_heat))),
     _k(declareGenericProperty<Real, is_ad>(
         getParam<std::string>(SolidPropertiesNames::thermal_conductivity))),
+    _dk_dT(declareGenericProperty<Real, is_ad>(
+        getParam<std::string>(SolidPropertiesNames::thermal_conductivity_dT))),
     _rho(declareGenericProperty<Real, is_ad>(getParam<std::string>(SolidPropertiesNames::density))),
 
     _sp(getUserObject<ThermalSolidProperties>("sp"))
@@ -55,7 +61,7 @@ void
 ThermalSolidPropertiesMaterialTempl<is_ad>::computeQpProperties()
 {
   _cp[_qp] = _sp.cp_from_T(_temperature[_qp]);
-  _k[_qp] = _sp.k_from_T(_temperature[_qp]);
+  _sp.k_from_T( MetaPhysicL::raw_value(_temperature[_qp]), _k[_qp], _dk_dT[_qp]);
   _rho[_qp] = _sp.rho_from_T(_temperature[_qp]);
 }
 

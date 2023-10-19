@@ -36,11 +36,14 @@ protected:
   /// Thermal conductivity
   GenericMaterialProperty<Real, is_ad> & _k;
 
+  GenericMaterialProperty<Real, is_ad> & _dk_dT;
+
   /// Density
   GenericMaterialProperty<Real, is_ad> & _rho;
 
   /// Solid properties
   const ThermalSolidProperties & _sp;
+  
 };
 
 typedef ThermalSolidPropertiesMaterialTempl<false> ThermalSolidPropertiesMaterial;

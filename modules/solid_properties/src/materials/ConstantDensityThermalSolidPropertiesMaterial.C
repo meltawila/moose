@@ -44,7 +44,7 @@ void
 ConstantDensityThermalSolidPropertiesMaterialTempl<is_ad>::computeQpProperties()
 {
   _cp[_qp] = _sp.cp_from_T(_temperature[_qp]);
-  _k[_qp] = _sp.k_from_T(_temperature[_qp]);
+  _sp.k_from_T( MetaPhysicL::raw_value(_temperature[_qp]), _k[_qp], _dk_dT[_qp]);
   _rho[_qp] = _rho_constant;
 }
 
